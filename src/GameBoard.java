@@ -1,14 +1,18 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Time;
 
 import javax.swing.JPanel;
-
+//import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameBoard extends JPanel{
 		
@@ -18,7 +22,11 @@ public class GameBoard extends JPanel{
 		
 		Slider s;
 		
+		int SLOWNESS = 15;
+		
 		Brick [] bricks = new Brick [5];
+		
+		Thread thread = new Thread();
 		
 		Ball ball;
 		
@@ -26,23 +34,24 @@ public class GameBoard extends JPanel{
 		{
 			super();
 			initializeBoard();
-//			panel.setFocusable(true);
-//			
-//			panel.addKeyListener(new KeyListener() {
-//				
-//                @Override
-//                public void keyTyped(KeyEvent e) {}
-//
-//                @Override
-//                public void keyReleased(KeyEvent e) {}
-//                
-//                @Override
-//                public void keyPressed(KeyEvent e) {
-//                    System.out.println("Pressed " + e.getKeyChar());
-//                }
-//            });
-//		//	addKeyListener(new My_Listener());
+	//		ball.moveTheBall();
+	//		thread.start();
+			Timer timer = new Timer();
+	//		startTheGame();
+			timer.scheduleAtFixedRate(new myTask(), 200, SLOWNESS);
 		}
+		
+		private class myTask extends TimerTask{
+
+			@Override
+			public void run() {
+				ball.moveTheBall();
+				repaint();
+				
+			}
+			
+		}
+		
 		
 		public void addBricks()
 		{
@@ -50,7 +59,7 @@ public class GameBoard extends JPanel{
 			
 			int heightOfBricks = 20, widthOfBricks = 45;
 			
-			for(int i = 0; i<bricks.length; i++)
+			for(int i = 0; i < bricks.length; i++)
 			{
 				col = i;
 				bricks[i] = new Brick((starting_x + (col * (widthOfBricks + 2))), (row * heightOfBricks) + starting_y, Color.RED);
@@ -75,34 +84,11 @@ public class GameBoard extends JPanel{
 			addBricks();
 			
 			ball = new Ball(150, 150, 10);
-			
-//			addKeyListener(new KeyListener() {
-//				
-//				@Override
-//				public void keyTyped(KeyEvent e) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//				
-//				@Override
-//				public void keyReleased(KeyEvent e) {
-//					// TODO Auto-generated method stub
-//					System.out.println("Awlaa");
-//				}
-//				
-//				@Override
-//				public void keyPressed(KeyEvent e) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//			});
+
 //			
 		}
 		
-		public void myWait(){
-			for (int i = 0; i < 99999999; i++);
-		}
-		
+	
 		public void paintComponent(Graphics g) {
 				
 				
@@ -144,7 +130,7 @@ public class GameBoard extends JPanel{
 			
 			
 		}
-
+		
 		private class MyListener implements KeyListener {
 
 			 @Override
@@ -161,7 +147,8 @@ public class GameBoard extends JPanel{
 			{
 				 System.out.println("Pressed!!!");
 				 s.move(e);
-				 repaint();
+		//		 ball.moveTheBall();
+		//		 repaint();
 		    }
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -170,5 +157,7 @@ public class GameBoard extends JPanel{
 			}
 
 		}
+
+
 	
 }

@@ -11,16 +11,16 @@ public class BreakOutGame extends JFrame{
 //	    Container gameSession = window.getContentPane();
 	   // gameSession.setLayout(Layou);
 	    
-		BreakOutGame mk = new BreakOutGame();
+		BreakOutGame game = new BreakOutGame();
 		
-	    mk.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    
-	    mk.setBounds(30, 30, 600, 600);			// (starting x, starting y, increase in x, y)
+		game.setBounds(30, 30, 600, 600);			// (starting x, starting y, increase in x, y)
 	    
 	    
-	    mk.add(new GameBoard());
-	    mk.setVisible(true);
+		game.add(new GameBoard());
+		game.setVisible(true);
 	   
 	    
 	 //   screenBottom.add(new Slider(0,0));

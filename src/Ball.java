@@ -3,7 +3,7 @@ import java.awt.geom.*;;
 
 public class Ball {
 	
-	private int starting_x, starting_y, diameter;
+	private int starting_x, starting_y, diameter, directionOfX = 1, directionOfY = 1;
 
 	Ball()
 	{
@@ -26,6 +26,24 @@ public class Ball {
 		ball.y = starting_y;
 		
 		return ball;
+	}
+	
+	public void moveTheBall()
+	{
+		starting_x = starting_x + directionOfX;
+		starting_y = starting_y + directionOfY;
+				
+		System.out.println(starting_x);
+		
+		if (starting_x == 600)
+			directionOfX = -1;
+		else if(starting_x == -1)
+			directionOfX = 1;
+		if (starting_y == 595)
+			directionOfY = -1;
+		else if(starting_y == -1)
+			directionOfY = 1;
+		
 	}
 	
 }
