@@ -12,13 +12,15 @@ import javax.swing.JPanel;
 
 public class GameBoard extends JPanel{
 		
-		Brick temp = new Brick(40, 40, Color.RED);
+	//	Brick temp = new Brick(40, 40, Color.RED);
 		
 		Container t = new Container();
 		
-		Slider s = new Slider(160,540);
-	
-		Brick [] bricks = new Brick [15];
+		Slider s;
+		
+		Brick [] bricks = new Brick [5];
+		
+		Ball ball;
 		
 		GameBoard()
 		{
@@ -44,30 +46,35 @@ public class GameBoard extends JPanel{
 		
 		public void addBricks()
 		{
-			int row = 0, starting_x = 40, starting_y = 40, col = 0;
+			int row = 0, starting_x = 180, starting_y = 40, col = 0;
 			
 			int heightOfBricks = 20, widthOfBricks = 45;
 			
 			for(int i = 0; i<bricks.length; i++)
 			{
 				col = i;
-				bricks[i] = new Brick(starting_x + (col * widthOfBricks), (row * heightOfBricks) + starting_y, Color.RED);
+				bricks[i] = new Brick((starting_x + (col * (widthOfBricks + 2))), (row * heightOfBricks) + starting_y, Color.RED);
 				if (i==9)
 				{
 					col = 1;
 					row += 1;
 				}
+				System.out.println(starting_x + (col * (widthOfBricks + 2)));
+				//col ++;
 			}
 		}
-		
+		/**
+		 * This method will just add the required elements (Bricks, slider and ball) to board. 
+		 */
 		public void initializeBoard()
 		{
 			setFocusable(true);
-			addKeyListener(new MyListener());
+			addKeyListener(new MyListener());		// add listener
 			
+			s = new Slider(160,540);				// initialize slider
 			addBricks();
 			
-			
+			ball = new Ball(150, 150, 10);
 			
 //			addKeyListener(new KeyListener() {
 //				
@@ -115,13 +122,20 @@ public class GameBoard extends JPanel{
 			    
 		}
 		
+		/**
+		 * 
+		 * This function would draw the board
+		 */
+		
 		public void drawSprites(Graphics2D g)
 		{
 //			g.clearRect(130, 130, 200, 30);
 			
 			g.fill(s.getRectangleToDraw());
 			
-			g.fill(temp.getRectangleToDraw());
+	//		g.fill(temp.getRectangleToDraw());
+			
+			g.fill(ball.getCircleToDraw());
 			
 			for(int i = 0; i<bricks.length; i++)
 			{
