@@ -1,5 +1,5 @@
 # Breakout
 
-Breakout is the main GameInstance class calling Gameboard.
+BreakoutGame is the main Game instance class calling Gameboard.
 
 GameBoard will have game components to draw and manipulate.
