@@ -21,7 +21,11 @@ public class Brick {
 		return new Rectangle(x,y,WIDTH_OF_BRICK,HEIGHT_OF_BRICK);
 	}
 	
-	
+	public void destroy()
+	{
+		WIDTH_OF_BRICK = 0;
+		HEIGHT_OF_BRICK = 0;
+	}
 	
 	
 	

@@ -24,7 +24,7 @@ class Slider{
 	
 	public Rectangle getRectangleToDraw()
 	{
-		System.out.println(x+"            X ");
+	//	System.out.println(x+"            X ");
 		return new Rectangle(x, y, WIDTH_OF_SLIDER, HEIGHT_OF_SLIDER);
 	}
 

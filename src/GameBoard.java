@@ -22,17 +22,22 @@ public class GameBoard extends JPanel{
 		
 		Slider s;
 		
-		int SLOWNESS = 15;
+		int SLOWNESS = 10;
 		
-		Brick [] bricks = new Brick [5];
+		int numberOfBricks = 16;
+		
+		Brick [] bricks = new Brick [numberOfBricks];
 		
 		Thread thread = new Thread();
 		
 		Ball ball;
 		
+		int noOfActiveBricks = numberOfBricks;				// Would be useful in isWin Condition
+		
 		GameBoard()
 		{
 			super();
+			setBounds(30, 30, 600, 600);
 			initializeBoard();
 	//		ball.moveTheBall();
 	//		thread.start();
@@ -46,6 +51,7 @@ public class GameBoard extends JPanel{
 			@Override
 			public void run() {
 				ball.moveTheBall();
+				checkBallCollsion();
 				repaint();
 				
 			}
@@ -55,21 +61,19 @@ public class GameBoard extends JPanel{
 		
 		public void addBricks()
 		{
-			int row = 0, starting_x = 180, starting_y = 40, col = 0;
+			int row = 0, starting_x = 110, starting_y = 40, index = 0;
 			
 			int heightOfBricks = 20, widthOfBricks = 45;
 			
-			for(int i = 0; i < bricks.length; i++)
+			for(int i = 0; i < 2; i++)
 			{
-				col = i;
-				bricks[i] = new Brick((starting_x + (col * (widthOfBricks + 2))), (row * heightOfBricks) + starting_y, Color.RED);
-				if (i==9)
+				for(int j = 0; j < 8; j++)
 				{
-					col = 1;
-					row += 1;
+
+					bricks[index] = new Brick((starting_x + (j * (widthOfBricks + 2))), (i * (heightOfBricks + 2)) + starting_y, Color.RED);
+					System.out.println(starting_x + (j * (widthOfBricks + 2)));
+					index ++;
 				}
-				System.out.println(starting_x + (col * (widthOfBricks + 2)));
-				//col ++;
 			}
 		}
 		/**
@@ -80,7 +84,7 @@ public class GameBoard extends JPanel{
 			setFocusable(true);
 			addKeyListener(new MyListener());		// add listener
 			
-			s = new Slider(160,540);				// initialize slider
+			s = new Slider(160, 540);				// initialize slider
 			addBricks();
 			
 			ball = new Ball(150, 150, 10);
@@ -157,7 +161,49 @@ public class GameBoard extends JPanel{
 			}
 
 		}
-
+		
+		public void checkBallCollsion(){
+			int starting_x = s.getRectangleToDraw().x;
+			int starting_y = s.getRectangleToDraw().y;
+			int ending_x = 60, ending_y = 10;
+			
+			System.out.println(starting_x +"                ====== X ");
+			// Check collision with the slider
+			if(ball.getCircleToDraw().intersects(starting_x, starting_y, ending_x, ending_y))
+			{
+				System.out.println("Intersected!");
+			//	System.exit(1);
+			//	ball.setXDir(ball.getXDir()*-1);
+				ball.setYDir(ball.getYDir()*-1);
+			}
+			
+			// Check collision with all of the bricks
+			for(int i = 0; i < bricks.length; i++)
+			{
+				if (ball.getCircleToDraw().intersects(bricks[i].getRectangleToDraw()))
+				{
+					bricks[i].destroy();
+					ball.setYDir(ball.getYDir()*-1);
+					noOfActiveBricks --;			
+				}
+				
+		//		System.out.println(starting_x + (col * (widthOfBricks + 2)));
+				//col ++;
+			}
+			
+				
+		}
+		
+		/**
+		 * This function should be static as we may need it to be at class level for all the objects of the class.
+		 * (Usefull when we need to convert it as a multi-player game)
+		 */
+		
+		public static void gameLost()
+		{
+			System.out.println("Player have lost the game!!");
+			System.exit(1);
+		}
 
 	
 }

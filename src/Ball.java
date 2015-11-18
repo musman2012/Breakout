@@ -28,22 +28,49 @@ public class Ball {
 		return ball;
 	}
 	
+	public int getXDir()
+	{
+		return directionOfX;
+	}
+	
+	public int getYDir()
+	{
+		return directionOfY;
+	}
+	
+	public void setXDir(int x)
+	{
+		directionOfX = x;
+	}
+	
+	public void setYDir(int y)
+	{
+		directionOfY = y;
+	}
+	
+	
 	public void moveTheBall()
 	{
 		starting_x = starting_x + directionOfX;
 		starting_y = starting_y + directionOfY;
 				
-		System.out.println(starting_x);
+	//	System.out.println(starting_x);
 		
-		if (starting_x == 600)
+		if (starting_x == 600 - diameter)
 			directionOfX = -1;
 		else if(starting_x == -1)
 			directionOfX = 1;
-		if (starting_y == 595)
-			directionOfY = -1;
+		if (starting_y == 565 - diameter)
+			GameBoard.gameLost();
 		else if(starting_y == -1)
 			directionOfY = 1;
 		
 	}
+	
+	
+//	public boolean checkCollision()
+//	{
+//		
+//	}
 	
 }
