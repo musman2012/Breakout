@@ -38,6 +38,11 @@ class Slider{
 		else if(event == 39)
 			this.x += 5;
 		
+		if (x > 600 - WIDTH_OF_SLIDER)
+			x = 600 - WIDTH_OF_SLIDER;
+		else if(x < 0)
+			x = 0;
+		
 		
 		// RightKey == 39, LK = 37
 	}

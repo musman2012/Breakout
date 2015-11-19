@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Time;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 //import javax.swing.Timer;
 import java.util.Timer;
@@ -32,6 +33,10 @@ public class GameBoard extends JPanel{
 		
 		Ball ball;
 		
+		Integer score = 0;
+		
+		JLabel scoreLabel = new JLabel();
+		
 		int noOfActiveBricks = numberOfBricks;				// Would be useful in isWin Condition
 		
 		GameBoard()
@@ -43,7 +48,14 @@ public class GameBoard extends JPanel{
 	//		thread.start();
 			Timer timer = new Timer();
 	//		startTheGame();
+			scoreLabel.setText(score.toString());
 			timer.scheduleAtFixedRate(new myTask(), 200, SLOWNESS);
+			
+			score = (numberOfBricks - noOfActiveBricks) * 10;
+			
+		//	Integer score1 = 0;
+			
+		//	String sc = score.toString();
 		}
 		
 		private class myTask extends TimerTask{
@@ -53,11 +65,19 @@ public class GameBoard extends JPanel{
 				ball.moveTheBall();
 				checkBallCollsion();
 				repaint();
-				
+				checkWinCondition();
 			}
 			
 		}
 		
+		public void checkWinCondition()
+		{
+			if(noOfActiveBricks == 0)
+			{
+				System.out.println("Player have won the game!!!");
+				System.exit(1);
+			}
+		}
 		
 		public void addBricks()
 		{
@@ -86,9 +106,11 @@ public class GameBoard extends JPanel{
 			
 			s = new Slider(160, 540);				// initialize slider
 			addBricks();
+			int ballInitalX = (int) ((Math.random() * 1000) % 600);
+			ball = new Ball(ballInitalX, 150, 10);
 			
-			ball = new Ball(150, 150, 10);
-
+			this.add(scoreLabel, 0, 0);
+			
 //			
 		}
 		
@@ -126,6 +148,10 @@ public class GameBoard extends JPanel{
 	//		g.fill(temp.getRectangleToDraw());
 			
 			g.fill(ball.getCircleToDraw());
+			
+	//		g.
+			
+			g.drawString(score.toString(), 0, 0);
 			
 			for(int i = 0; i<bricks.length; i++)
 			{
