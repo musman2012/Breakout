@@ -35,7 +35,7 @@ public class GameBoard extends JPanel{
 		
 		Integer score = 0;
 		
-		JLabel scoreLabel = new JLabel();
+		JLabel scoreLabel = new JLabel("Score : 0");
 		
 		int noOfActiveBricks = numberOfBricks;				// Would be useful in isWin Condition
 		
@@ -48,10 +48,12 @@ public class GameBoard extends JPanel{
 	//		thread.start();
 			Timer timer = new Timer();
 	//		startTheGame();
-			scoreLabel.setText(score.toString());
+	//		scoreLabel.setText(score.toString());
 			timer.scheduleAtFixedRate(new myTask(), 200, SLOWNESS);
 			
-			score = (numberOfBricks - noOfActiveBricks) * 10;
+		//	score = (numberOfBricks - noOfActiveBricks) * 10;
+			
+			add(scoreLabel);
 			
 		//	Integer score1 = 0;
 			
@@ -150,6 +152,7 @@ public class GameBoard extends JPanel{
 			g.fill(ball.getCircleToDraw());
 			
 	//		g.
+			scoreLabel.setText("Score : "+score);
 			
 			g.drawString(score.toString(), 0, 0);
 			
@@ -210,7 +213,8 @@ public class GameBoard extends JPanel{
 				{
 					bricks[i].destroy();
 					ball.setYDir(ball.getYDir()*-1);
-					noOfActiveBricks --;			
+					noOfActiveBricks --;
+					score += 5;
 				}
 				
 		//		System.out.println(starting_x + (col * (widthOfBricks + 2)));
